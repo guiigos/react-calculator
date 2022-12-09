@@ -1,17 +1,18 @@
 import React, { useState } from "react";
+import calculate from "calculate-string";
 import './Calculator.css';
 
 function Calculator() {
-  const [result, setResult] = useState();
+  const [text, setText] = useState('');
 
-  const handlerInput = (number) => () => {
-    setResult(number);
-  }
+  const handlerInput = (value) => () => setText(current => `${current}${value}`);
+  const handlerCalc = () => setText(current => calculate(current));
+  const handlerClean = () => setText(' ');
 
   return (
     <div className="container">
       <div className="calculator">
-        <div className="display">{result}</div>
+        <div className="display">{text}</div>
         
         {Array.from(Array(10).keys()).map((number) => (
           <div 
@@ -22,13 +23,13 @@ function Calculator() {
           </div>
         ))}
 
-        <div className="button dot">.</div>
-        <div className="button sum">+</div>
-        <div className="button subtract">-</div>
-        <div className="button multiply">*</div>
-        <div className="button divide">/</div>
-        <div className="button result">=</div>
-        <div className="button clean">C</div>
+        <div className="button dot" onClick={handlerInput('.')}>.</div>
+        <div className="button sum" onClick={handlerInput(' + ')}>+</div>
+        <div className="button subtract" onClick={handlerInput(' - ')}>-</div>
+        <div className="button multiply" onClick={handlerInput(' * ')}>*</div>
+        <div className="button divide" onClick={handlerInput(' / ')}>/</div>
+        <div className="button result" onClick={handlerCalc}>=</div>
+        <div className="button clean" onClick={handlerClean}>C</div>
       </div>
     </div>
   );
